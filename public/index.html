@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Clima Agora</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
 </head>
+
 <body>
   <input class="vh" type="radio" name="estado" id="s-inicial" checked aria-label="Visualizar estado inicial">
   <input class="vh" type="radio" name="estado" id="s-carregando" aria-label="Visualizar carregamento">
@@ -21,7 +24,7 @@
     </header>
 
     <!-- Formulário: nesta etapa o botão ainda não faz nada (sem JavaScript e sem back-end). -->
-    <form class="search" onsubmit="return false" role="search">
+    <form class="search" role="search">
       <label class="f" for="q">Cidade ou localidade</label>
       <div class="row">
         <input id="q" type="search" name="cidade" placeholder="Ex.: São Paulo" autocomplete="off"
@@ -45,25 +48,25 @@
           <p>Consultando clima...</p>
         </div>
       </div>
-      
+
       <div class="state" id="resultado">
         <span class="tag">Dados fictícios, apenas para demonstrar o visual</span>
-        <h2 class="place">Localidade de exemplo</h2>
+        <h2 class="place" id="res-local">Localidade de exemplo</h2>
         <div class="main">
-          <span class="big" aria-hidden="true">⛅</span>
+          <span class="big" id="res-icone" aria-hidden="true">⛅</span>
           <div>
-            <div class="temp">00°C</div>
-            <div class="cond">Condição do clima (exemplo)</div>
+            <div class="temp" id="res-temp">00°C</div>
+            <div class="cond" id="res-cond">Condição do clima (exemplo)</div>
           </div>
         </div>
         <dl class="cards" style="margin:0">
           <div class="c">
             <dt>🌧️ Chance de chuva</dt>
-            <dd>00%</dd>
+            <dd id="res-chuva">00%</dd>
           </div>
           <div class="c">
             <dt>🌡️ Sensação térmica</dt>
-            <dd>00°C</dd>
+            <dd id="res-sensacao">00°C</dd>
           </div>
         </dl>
       </div>
