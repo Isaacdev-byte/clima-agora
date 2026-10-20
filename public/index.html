@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Clima Agora</title>
+<style>
+:root{--bg:#e8f3ff;--bg2:#ffffff;--card:#ffffff;--ink:#0f2740;--mut:#46607b;--pri:#1565c0;--priink:#ffffff;--line:#c9dcf1;--err-bg:#fdecec;--err:#8a1c1c;--tag:#fff4d6;--tagink:#5b4300;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0c1b2e;--bg2:#10233b;--card:#142843;--ink:#eaf3ff;--mut:#a9c0da;--pri:#5aa9ff;--priink:#06223f;--line:#27425f;--err-bg:#3a1a1d;--err:#ffb4b4;--tag:#3b3110;--tagink:#ffe9a8;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0c1b2e;--bg2:#10233b;--card:#142843;--ink:#eaf3ff;--mut:#a9c0da;--pri:#5aa9ff;--priink:#06223f;--line:#27425f;--err-bg:#3a1a1d;--err:#ffb4b4;--tag:#3b3110;--tagink:#ffe9a8;color-scheme:dark}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;min-height:100%;display:flex;flex-direction:column;background:linear-gradient(180deg,var(--bg),var(--bg2));color:var(--ink);font:1rem/1.5 system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif}
+.wrap{width:100%;max-width:44rem;margin:0 auto;padding:1.5rem 1rem}
+header h1{margin:0;font-size:clamp(1.75rem,5vw,2.5rem);letter-spacing:-.02em}
+header p{margin:.25rem 0 0;color:var(--mut)}
+.logo{margin-right:.4rem}
+.search{margin-top:1.5rem;background:var(--card);border:1px solid var(--line);border-radius:1rem;padding:1rem}
+label.f{display:block;font-weight:600;margin-bottom:.4rem}
+.row{display:flex;gap:.6rem;flex-wrap:wrap}
+input[type=search]{flex:1 1 14rem;min-height:3rem;padding:0 .9rem;font:inherit;color:var(--ink);background:var(--bg2);border:2px solid var(--line);border-radius:.7rem}
+input[type=search]:focus,button:focus-visible{outline:3px solid var(--pri);outline-offset:2px}
+button.go{min-height:3rem;padding:0 1.25rem;font:inherit;font-weight:600;color:var(--priink);background:var(--pri);border:0;border-radius:.7rem;cursor:pointer;flex:0 1 auto}
+.hint{margin:.4rem 0 0;font-size:.875rem;color:var(--mut)}
+.panel{margin-top:1.25rem;background:var(--card);border:1px solid var(--line);border-radius:1rem;padding:1.25rem;min-height:11rem}
+.state{display:none}
+#s-inicial:checked~main #inicial,#s-carregando:checked~main #carregando,#s-resultado:checked~main #resultado,
+#s-e1:checked~main #e1,#s-e2:checked~main #e2,#s-e3:checked~main #e3{display:block}
+.center{text-align:center;padding:1rem 0}
+.big{font-size:3rem;line-height:1}
+.err{background:var(--err-bg);color:var(--err);border-radius:.7rem;padding:1rem}
+.err strong{display:block}
+.spin{width:2.2rem;height:2.2rem;border:4px solid var(--line);border-top-color:var(--pri);border-radius:50%;margin:0 auto .6rem;animation:g 1s linear infinite}
+@keyframes g{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.spin{animation:none}}
+.tag{display:inline-block;background:var(--tag);color:var(--tagink);font-size:.8125rem;font-weight:600;padding:.15rem .6rem;border-radius:99px;margin-bottom:.75rem}
+.place{margin:0;font-size:1.25rem}
+.main{display:flex;align-items:center;gap:1rem;margin:.75rem 0 1rem;flex-wrap:wrap}
+.temp{font-size:clamp(3.5rem,14vw,5.5rem);font-weight:700;line-height:1;letter-spacing:-.03em}
+.cond{font-size:1.125rem;color:var(--mut)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));gap:.75rem}
+.c{background:var(--bg);border:1px solid var(--line);border-radius:.8rem;padding:.8rem 1rem}
+.c dt{font-size:.875rem;color:var(--mut)}
+.c dd{margin:.1rem 0 0;font-size:1.5rem;font-weight:700}
+.prev{margin-top:1.5rem;border:1px dashed var(--line);border-radius:1rem;padding:.9rem 1rem}
+.prev legend{padding:0 .4rem;font-size:.875rem;font-weight:600;color:var(--mut)}
+.prev p{margin:0 0 .6rem;font-size:.8125rem;color:var(--mut)}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem}
+.chips label{cursor:pointer;font-size:.875rem;padding:.4rem .8rem;border:1px solid var(--line);border-radius:99px;background:var(--card)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+#s-inicial:checked~main label[for=s-inicial],#s-carregando:checked~main label[for=s-carregando],#s-resultado:checked~main label[for=s-resultado],
+#s-e1:checked~main label[for=s-e1],#s-e2:checked~main label[for=s-e2],#s-e3:checked~main label[for=s-e3]{background:var(--pri);color:var(--priink);border-color:var(--pri)}
+#s-inicial:focus-visible~main label[for=s-inicial],#s-carregando:focus-visible~main label[for=s-carregando],#s-resultado:focus-visible~main label[for=s-resultado],
+#s-e1:focus-visible~main label[for=s-e1],#s-e2:focus-visible~main label[for=s-e2],#s-e3:focus-visible~main label[for=s-e3]{outline:3px solid var(--pri);outline-offset:2px}
+footer{margin-top:auto;text-align:center;font-size:.8125rem;color:var(--mut);padding:1rem 1rem calc(1rem + env(safe-area-inset-bottom,0px))}
+</style>
+</head>
+<body>
+<input class="vh" type="radio" name="estado" id="s-inicial" checked aria-label="Visualizar estado inicial">
+<input class="vh" type="radio" name="estado" id="s-carregando" aria-label="Visualizar carregamento">
+<input class="vh" type="radio" name="estado" id="s-resultado" aria-label="Visualizar resultado">
+<input class="vh" type="radio" name="estado" id="s-e1" aria-label="Visualizar erro de busca vazia">
+<input class="vh" type="radio" name="estado" id="s-e2" aria-label="Visualizar erro de localidade não encontrada">
+<input class="vh" type="radio" name="estado" id="s-e3" aria-label="Visualizar erro de falha na consulta">
+
+<main class="wrap">
+  <header>
+    <h1><span class="logo" aria-hidden="true">🌤️</span>Clima Agora</h1>
+    <p>Consulte o clima por cidade ou localidade.</p>
+  </header>
+
+  <!-- Formulário: nesta etapa o botão ainda não faz nada (sem JavaScript e sem back-end). -->
+  <form class="search" onsubmit="return false" role="search">
+    <label class="f" for="q">Cidade ou localidade</label>
+    <div class="row">
+      <input id="q" type="search" name="cidade" placeholder="Ex.: São Paulo" autocomplete="off" aria-describedby="dica">
+      <button class="go" type="submit">Consultar clima</button>
+    </div>
+    <p class="hint" id="dica">Digite o nome e toque em “Consultar clima”. (Ainda inativo nesta etapa.)</p>
+  </form>
+
+  <section class="panel" aria-live="polite" aria-label="Resultado da consulta">
+    <div class="state" id="inicial">
+      <div class="center"><div class="big" aria-hidden="true">🔎</div>
+      <p><strong>Pesquise uma localidade</strong><br>O resultado aparecerá aqui.</p></div>
+    </div>
+
+    <div class="state" id="carregando">
+      <div class="center" role="status"><div class="spin" aria-hidden="true"></div><p>Consultando clima...</p></div>
+    </div>
+
+    <div class="state" id="resultado">
+      <span class="tag">Dados fictícios, apenas para demonstrar o visual</span>
+      <h2 class="place">Localidade de exemplo</h2>
+      <div class="main">
+        <span class="big" aria-hidden="true">⛅</span>
+        <div><div class="temp">00°C</div><div class="cond">Condição do clima (exemplo)</div></div>
+      </div>
+      <dl class="cards" style="margin:0">
+        <div class="c"><dt>🌧️ Chance de chuva</dt><dd>00%</dd></div>
+        <div class="c"><dt>🌡️ Sensação térmica</dt><dd>00°C</dd></div>
+      </dl>
+    </div>
+
+    <div class="state" id="e1"><div class="err" role="alert"><strong>Digite uma localidade</strong>O campo de busca está vazio. Informe uma cidade para consultar.</div></div>
+    <div class="state" id="e2"><div class="err" role="alert"><strong>Localidade não encontrada</strong>Verifique a grafia ou tente incluir o estado ou país.</div></div>
+    <div class="state" id="e3"><div class="err" role="alert"><strong>Não foi possível consultar o clima</strong>Ocorreu uma falha. Tente novamente em instantes.</div></div>
+  </section>
+
+  <fieldset class="prev">
+    <legend>Pré-visualização do design</legend>
+    <p>Apenas para revisar o visual: alterna os estados sem JavaScript. Não faz parte do site final.</p>
+    <div class="chips">
+      <label for="s-inicial">Inicial</label>
+      <label for="s-carregando">Carregando</label>
+      <label for="s-resultado">Resultado</label>
+      <label for="s-e1">Erro: busca vazia</label>
+      <label for="s-e2">Erro: não encontrada</label>
+      <label for="s-e3">Erro: falha</label>
+    </div>
+  </fieldset>
+</main>
+
+<footer>Clima Agora · Consulte o clima de qualquer lugar</footer>
+</body>
+</html>
