@@ -1,35 +1,31 @@
-// Clima Agora - src/services/climaService.js
-// ETAPA DE TESTE: devolve dados FICTICIOS.
-// Na proxima etapa, o interior desta funcao sera trocado pela consulta a Open-Meteo.
+// Junta a geocodificacao e a previsao e devolve os dados no formato que o front-end espera.
 
-const { ErroDeClima } = require("../utils/erros");
+const { buscarLocalidade } = require ("./geocodingService");
+const { buscaPrevisao, buscarPrevisao } = require ("./forecastService");
+
+function montarNomeDaLocalidade (local) {
+  const partes = [local.nome];
+  if (local.regiao && local.regiao !== local.nome) {
+    partes.push(local.regiao);
+  }
+  if (local.pais) {
+    partes.push(local.pais);
+  }
+  return partes.join(", ");
+}
 
 async function buscarClima(cidade) {
-  // Busca vazia
-  if (cidade === "") {
-    throw new ErroDeClima("busca_vazia", "Informe uma cidade ou localidade.", 400);
-  }
+  const local = await buscarLocalidade (cidade);
+  const previsao = await buscarPrevisao(local.latitude, local.longitude);
 
-  // Teste de falha
-  if (cidade.toLowerCase() === "erro") {
-    throw new ErroDeClima("falha_consulta", "Nao foi possivel consultar o clima.", 500);
-  }
-
-  // Cidade de teste (dados FICTICIOS)
-  if (cidade.toLowerCase() === "teste") {
-    return {
-      ficticio: true,
-      localidade: "Cidade de teste (ficticia)",
-      condicao: "Parcialmente nublado (exemplo)",
-      icone: "⛅",
-      temperaturaC: 25,
-      chanceChuvaPct: 40,
-      sensacaoC: 27,
-    };
-  }
-
-  // Qualquer outra coisa
-  throw new ErroDeClima("nao_encontrada", "Localidade nao encontrada.", 404);
+  return {
+    localidade:montarNomeDaLocalidade(local),
+    condicao: previsao.condicao,
+    icone: previsao.icone,
+    temperaturaC: previsao.temperaturaC,
+    chanceChuvaPct: previsao.chanceChuvaPct,
+    sensacaoC: previsao.sensacaoC,
+  };
 }
 
 module.exports = { buscarClima };

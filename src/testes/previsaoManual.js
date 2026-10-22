@@ -1,4 +1,3 @@
-// Teste manual: node src/testes/previsaoManual.js "Nome da cidade"
 
 const { buscarLocalidade } = require("../services/geocodingService");
 const { buscarPrevisao } = require("../services/forecastService");

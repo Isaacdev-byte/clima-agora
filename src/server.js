@@ -1,4 +1,3 @@
-// Clima Agora - src/server.js
 // Liga o servidor, serve a pasta public e registra as rotas.
 
 const express = require("express");

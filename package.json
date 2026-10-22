@@ -1,5 +1,5 @@
 {
-  "name": "clima-agora",
+  "name": "Nimbos",
   "version": "1.0.0",
   "description": "Site para consultar o clima por cidade ou localidade.\r Status: estrutura inicial do front-end (sem integração ainda).",
   "main": "index.js",

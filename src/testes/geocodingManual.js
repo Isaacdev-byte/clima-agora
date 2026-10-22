@@ -1,4 +1,4 @@
-// Clima Agora - src/testes/geocodingManual.js
+// Nimbos- src/testes/geocodingManual.js
 // Teste manual: node src/testes/geocodingManual.js "Nome da cidade"
 
 const { buscarLocalidade } = require("../services/geocodingService");

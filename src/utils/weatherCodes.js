@@ -1,4 +1,3 @@
-// Clima Agora - src/utils/weatherCodes.js
 
 const CODIGOS = {
   0: { texto: "Céu limpo", icone: "☀️", iconeNoite: "🌙" },

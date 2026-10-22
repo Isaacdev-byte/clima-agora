@@ -47,3 +47,4 @@ button.go{min-height:3rem;padding:0 1.25rem;font:inherit;font-weight:600;color:v
 #s-inicial:focus-visible~main label[for=s-inicial],#s-carregando:focus-visible~main label[for=s-carregando],#s-resultado:focus-visible~main label[for=s-resultado],
 #s-e1:focus-visible~main label[for=s-e1],#s-e2:focus-visible~main label[for=s-e2],#s-e3:focus-visible~main label[for=s-e3]{outline:3px solid var(--pri);outline-offset:2px}
 footer{margin-top:auto;text-align:center;font-size:.8125rem;color:var(--mut);padding:1rem 1rem calc(1rem + env(safe-area-inset-bottom,0px))}
+footer a{color:var(--pri)}

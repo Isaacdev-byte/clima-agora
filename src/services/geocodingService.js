@@ -1,4 +1,4 @@
-// Clima Agora - src/services/geocodingService.js
+// Nimbos - src/services/geocodingService.js
 // Transforma o nome de uma cidade em coordenadas, usando a API de geocodificacao da Open-Meteo.
 
 const { ErroDeClima } = require("../utils/erros");

@@ -1,4 +1,3 @@
-// Clima Agora - src/utils/erros.js
 // Um tipo de erro nosso: carrega um codigo (para o front-end) e um status HTTP.
 
 class ErroDeClima extends Error {
