@@ -10,12 +10,6 @@
 </head>
 
 <body>
-  <input class="vh" type="radio" name="estado" id="s-inicial" checked aria-label="Visualizar estado inicial">
-  <input class="vh" type="radio" name="estado" id="s-carregando" aria-label="Visualizar carregamento">
-  <input class="vh" type="radio" name="estado" id="s-resultado" aria-label="Visualizar resultado">
-  <input class="vh" type="radio" name="estado" id="s-e1" aria-label="Visualizar erro de busca vazia">
-  <input class="vh" type="radio" name="estado" id="s-e2" aria-label="Visualizar erro de localidade não encontrada">
-  <input class="vh" type="radio" name="estado" id="s-e3" aria-label="Visualizar erro de falha na consulta">
 
   <main class="wrap">
     <header>
@@ -34,7 +28,7 @@
       <p class="hint" id="dica">Digite o nome e toque em “Consultar clima”. (Ainda inativo nesta etapa.)</p>
     </form>
 
-    <section class="panel" aria-live="polite" aria-label="Resultado da consulta">
+    <section class="panel" data-estado="inicial" aria-live="polite" aria-label="Resultado da consulta">
       <div class="state" id="inicial">
         <div class="center">
           <div class="big" aria-hidden="true">🔎</div>

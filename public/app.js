@@ -2,11 +2,12 @@
 
 const formulario = document.querySelector("form.search");
 const campoCidade = document.getElementById("q");
+const painel = document.querySelector(".panel");
 
 // Mostra um estado da tela: "inicial", "carregando", "resultado", "e1", "e2" ou "e3".
 // Funciona marcando o botao de radio escondido que o CSS ja usa.
 function mostrarEstado(nome) {
-  document.getElementById("s-" + nome).checked = true;
+  painel.dataset.estado = nome;
 }
 
 // Escreve os dados nos elementos do resultado.
